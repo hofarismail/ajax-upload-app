@@ -76,21 +76,10 @@
                 });
             }
 
-            // $(document).on('change', '.file', function() {
-            //     let parentBox = $(this).closest('.boxUpload');
-
-            //     uploadFile(parentBox);
-            // });
-
             $('#submitAll').on('click', function() {
                 let boxUpload = $('.boxUpload');
 
-                console.log(boxUpload);
-
                 boxUpload.each((index, element) => {
-                    console.log(index);
-                    console.log(element);
-
                     uploadFile($(element));
                 });
             });
