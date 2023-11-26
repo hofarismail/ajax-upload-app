@@ -51,11 +51,14 @@
     <script>
         $(document).ready(function() {
             function uploadFile(boxUpload) {
-                let fileInput = boxUpload.find('.file');
-                let progressUploadBar = boxUpload.find('.progressUpload');
+                let fileInput = boxUpload.find('.file')[0];
+                let fileInput1 = document.getElementById('file_1');
+                let progressUploadBar = boxUpload.find('.progressUpload')[0];
+                let messageEl = boxUpload.find('.message');
 
-                // console.log(fileInput);
-                // console.log(progressUploadBar);
+                console.log(fileInput);
+                console.log(fileInput1);
+                console.log(progressUploadBar);
 
                 let formData = new FormData();
                 formData.append('file', fileInput.files[0]);
@@ -78,13 +81,13 @@
                     console.log(response.data);
 
                     if (response.success) {
-                        $('#message').html('<p style="color:green;">' + response.message +
+                        messageEl.html('<p style="color:green;">' + response.message +
                             '</p>');
-                    } else {}
+                    }
                 }).catch(function(error) {
                     console.error(error);
 
-                    $('#message').html('<p style="color:red;">' + error.response.data.message +
+                    messageEl.html('<p style="color:red;">' + error.response.data.message +
                         ': ' + error.response.data.errors.file[0] + '</p>');
                 });
             }
