@@ -34,3 +34,9 @@ Route::get('/axios-upload', function () {
     return view('upload-document-with-axios-progress');
 });
 Route::post('/axios-upload', [UploadController::class, 'upload']);
+
+// upload with axios and progress bar and simultan
+Route::get('/axios-upload-2', function () {
+    return view('upload-document-with-axios-progress-simultan');
+});
+Route::post('/axios-upload-2', [UploadController::class, 'upload']);
