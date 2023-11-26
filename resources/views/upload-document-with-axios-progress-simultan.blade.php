@@ -17,6 +17,9 @@
 <body>
     <div class="container my-4">
         <div id="targetUpload"></div>
+        <div>
+            <button id="submitAll" type="button" class="btn btn-primary">Submit All</button>
+        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -73,10 +76,23 @@
                 });
             }
 
-            $(document).on('change', '.file', function() {
-                let parentBox = $(this).closest('.boxUpload');
+            // $(document).on('change', '.file', function() {
+            //     let parentBox = $(this).closest('.boxUpload');
 
-                uploadFile(parentBox);
+            //     uploadFile(parentBox);
+            // });
+
+            $('#submitAll').on('click', function() {
+                let boxUpload = $('.boxUpload');
+
+                console.log(boxUpload);
+
+                boxUpload.each((index, element) => {
+                    console.log(index);
+                    console.log(element);
+
+                    uploadFile($(element));
+                });
             });
 
             let boxUpload = "";
