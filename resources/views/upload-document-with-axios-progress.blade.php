@@ -16,30 +16,9 @@
 
 <body>
     <div class="container my-4">
-        <div class="boxUpload">
-            <div class="mb-3">
-                <label for="file_1" class="form-label">Choose a file:</label>
-                <input type="file" id="file_1" name="file_1" class="file form-control" data-guide="0" />
-            </div>
-            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="0"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progressUpload progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">
-                </div>
-            </div>
-            <div class="message form-text"></div>
-        </div>
-
-        <div class="boxUpload">
-            <div class="mb-3">
-                <label for="file_2" class="form-label">Choose a file:</label>
-                <input type="file" id="file_2" name="file_2" class="file form-control" data-guide="1" />
-            </div>
-            <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="0"
-                aria-valuemin="0" aria-valuemax="100">
-                <div class="progressUpload progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">
-                </div>
-            </div>
-            <div class="message form-text"></div>
+        <div id="targetUpload"></div>
+        <div>
+            <button id="submitAll" type="button" class="btn btn-primary">Submit All</button>
         </div>
     </div>
 
@@ -55,11 +34,6 @@
                 let fileInput1 = document.getElementById('file_1');
                 let progressUploadBar = boxUpload.find('.progressUpload')[0];
                 let messageEl = boxUpload.find('.message');
-
-                console.log(fileInput);
-                console.log(fileInput1);
-                console.log(progressUploadBar);
-
                 let formData = new FormData();
                 formData.append('file', fileInput.files[0]);
 
@@ -80,24 +54,55 @@
                 }).then(function(response) {
                     console.log(response.data);
 
-                    if (response.success) {
-                        messageEl.html('<p style="color:green;">' + response.message +
-                            '</p>');
+                    if (response.data.success) {
+                        let html = `
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            ${response.data.message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        `;
+                        messageEl.html(html);
                     }
                 }).catch(function(error) {
                     console.error(error);
 
-                    messageEl.html('<p style="color:red;">' + error.response.data.message +
-                        ': ' + error.response.data.errors.file[0] + '</p>');
+                    let html = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${error.response.data.message + ': ' + error.response.data.errors.file[0]}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    `;
+                    messageEl.html(html);
                 });
             }
 
-            $('.file').on('change', function() {
+            $(document).on('change', '.file', function() {
                 let parentBox = $(this).closest('.boxUpload');
-                // console.log(parentBox);
 
                 uploadFile(parentBox);
             });
+
+            let boxUpload = "";
+            let maxLoop = 3;
+
+            for (let index = 0; index < maxLoop; index++) {
+                boxUpload += `
+                <div class="boxUpload mb-3">
+                    <div class="mb-3">
+                        <label for="file_${index}" class="form-label">Choose a file:</label>
+                        <input type="file" id="file_${index}" name="file_1" class="file form-control" data-guide="${index}" />
+                    </div>
+                    <div class="progress" role="progressbar" aria-label="Animated striped example" aria-valuenow="0"
+                        aria-valuemin="0" aria-valuemax="100">
+                        <div class="progressUpload progress-bar progress-bar-striped progress-bar-animated" style="width: 0%">
+                        </div>
+                    </div>
+                    <div class="message form-text"></div>
+                </div>
+                `;
+            }
+
+            $('#targetUpload').html(boxUpload);
         });
     </script>
 
