@@ -10,15 +10,14 @@ class UploadController extends Controller
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|mimes:pdf|max:2048', // Hanya izinkan file PDF dengan ukuran maksimal 2MB
+            'file' => 'required|mimes:pdf|max:2048',
         ]);
 
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $fileName = time() . '.' . $file->getClientOriginalExtension();
-            $filePath = $file->storeAs('uploads', $fileName, 'public'); // Simpan file ke direktori 'storage/app/public/uploads'
+            $filePath = $file->storeAs('uploads', $fileName, 'public');
 
-            // Simpan informasi tentang dokumen ke dalam tabel 'documents'
             $document = new Document();
             $document->name = $file->getClientOriginalName();
             $document->file_path = $filePath;
