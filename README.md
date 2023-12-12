@@ -1,5 +1,7 @@
 # ajax-upload-app
 
+![Alt Text](5db1be81-7bec-41e8-a53a-7a7bca57941e.jfif)
+
 Deskripsi singkat mengenai proyek ini.
 
 ## Persyaratan
