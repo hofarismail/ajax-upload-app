@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\UploadController;
 
@@ -40,3 +41,29 @@ Route::get('/axios-upload-2', function () {
     return view('upload-document-with-axios-progress-simultan');
 });
 Route::post('/axios-upload-2', [UploadController::class, 'upload']);
+
+// Routes for Artisan commands
+Route::get('/config-clear', function () {
+    Artisan::call('config:clear');
+    return 'Configuration cache cleared!';
+});
+
+Route::get('/cache-clear', function () {
+    Artisan::call('cache:clear');
+    return 'Application cache cleared!';
+});
+
+Route::get('/route-cache', function () {
+    Artisan::call('route:cache');
+    return 'Routes cache cleared and cached again!';
+});
+
+Route::get('/view-clear', function () {
+    Artisan::call('view:clear');
+    return 'View cache cleared!';
+});
+
+Route::get('/optimize', function () {
+    Artisan::call('optimize');
+    return 'Application optimized!';
+});
